@@ -48,9 +48,9 @@ public class GameDirector : MonoBehaviour
 
   public TMPro.TextMeshProUGUI RespawnTxt;
 
-  public Image FadeLeft;
+  public Transform FadeLeft;
 
-  public Image FadeRight;
+  public Transform FadeRight;
 
   public float FadeSpeed;
 
@@ -157,7 +157,7 @@ public class GameDirector : MonoBehaviour
     Enemies.text = (TotalEnemyCount - EnemiesDied).ToString();
 
     FadeOut = true;
-    FadeThrashold = FadeLeft.rectTransform.position.x * (-1);
+    FadeThrashold = FadeLeft.position.x - FadeLeft.localScale.x;
 
     Sound.Play();
   }
@@ -182,11 +182,12 @@ public class GameDirector : MonoBehaviour
     }
     if(FadeOut)
     {
-      FadeLeft.rectTransform.position = new Vector3(FadeLeft.rectTransform.position.x - FadeSpeed * Time.deltaTime, 
-        FadeLeft.rectTransform.position.y, FadeLeft.rectTransform.position.z);
-      FadeRight.rectTransform.position = new Vector3(FadeRight.rectTransform.position.x + FadeSpeed * Time.deltaTime,
-        FadeRight.rectTransform.position.y, FadeRight.rectTransform.position.z);
-      if (FadeLeft.rectTransform.position.x <= FadeThrashold)
+      
+      FadeLeft.position = new Vector3(FadeLeft.position.x - FadeSpeed * Time.deltaTime, 
+        FadeLeft.position.y, FadeLeft.position.z);
+      FadeRight.position = new Vector3(FadeRight.position.x + FadeSpeed * Time.deltaTime,
+        FadeRight.position.y, FadeRight.position.z);
+      if (FadeLeft.position.x <= FadeThrashold)
       {
         FadeOut = false;
         IsGameActive = true;
